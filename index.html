@@ -6,12 +6,7 @@
 <title>Goyli 🐻👑</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 
 body{
   min-height:100vh;
@@ -25,34 +20,17 @@ body{
 .app{
   width:100%;
   max-width:420px;
-  background:rgba(255,255,255,.94);
+  background:rgba(255,255,255,.95);
   border-radius:30px;
   padding:30px 24px;
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,.18);
 }
 
-.bear{
-  font-size:90px;
-  margin-bottom:5px;
-}
-
-.crown{
-  font-size:35px;
-  margin-bottom:5px;
-}
-
-h1{
-  font-size:42px;
-  color:#6d28d9;
-  margin-bottom:5px;
-}
-
-.subtitle{
-  color:#666;
-  margin-bottom:25px;
-  font-size:16px;
-}
+.bear{font-size:80px}
+.crown{font-size:35px}
+h1{font-size:42px;color:#6d28d9;margin:8px}
+.subtitle{color:#666;margin-bottom:25px}
 
 .input{
   width:100%;
@@ -61,43 +39,57 @@ h1{
   border:2px solid #ddd;
   border-radius:18px;
   font-size:16px;
-  outline:none;
-}
-
-.input:focus{
-  border-color:#8b5cf6;
 }
 
 .login{
   width:100%;
   padding:16px;
   margin-top:15px;
-  border:none;
+  border:0;
   border-radius:18px;
   background:linear-gradient(90deg,#8b5cf6,#ec4899);
   color:white;
   font-size:18px;
   font-weight:bold;
-  cursor:pointer;
-}
-
-.login:active{
-  transform:scale(.98);
-}
-
-.info{
-  margin-top:20px;
-  font-size:13px;
-  color:#777;
 }
 
 .dark{
   margin-top:18px;
-  border:none;
+  border:0;
   background:#eee;
   padding:10px 15px;
   border-radius:15px;
-  cursor:pointer;
+}
+
+.error{
+  color:#dc2626;
+  margin-top:12px;
+  font-size:14px;
+}
+
+#inicio{display:none}
+
+.menu{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.menu button{
+  padding:15px;
+  border:0;
+  border-radius:18px;
+  font-size:16px;
+  background:#f3e8ff;
+}
+
+.logout{
+  margin-top:20px;
+  padding:12px 20px;
+  border:0;
+  border-radius:15px;
+  background:#fee2e2;
 }
 
 body.modo-oscuro{
@@ -109,8 +101,7 @@ body.modo-oscuro{
   color:white;
 }
 
-.modo-oscuro .subtitle,
-.modo-oscuro .info{
+.modo-oscuro .subtitle{
   color:#ccc;
 }
 
@@ -124,54 +115,120 @@ body.modo-oscuro{
   background:#444;
   color:white;
 }
+
+.modo-oscuro .menu button{
+  background:#34304d;
+  color:white;
+}
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
+<div class="app" id="login">
   <div class="crown">👑</div>
   <div class="bear">🐻</div>
 
   <h1>Goyli</h1>
   <p class="subtitle">Tu espacio de clase 💙</p>
 
-  <input
-    class="input"
-    type="email"
-    placeholder="📧 Correo electrónico"
-  >
+  <input id="email" class="input" type="email"
+    placeholder="📧 Correo electrónico">
 
-  <input
-    class="input"
-    type="password"
-    placeholder="🔑 Contraseña"
-  >
+  <input id="password" class="input" type="password"
+    placeholder="🔑 Contraseña">
 
   <button class="login" onclick="entrar()">
     Entrar 🚀
   </button>
 
-  <p class="info">
-    🔐 Solo pueden entrar usuarios invitados.
-  </p>
+  <p id="error" class="error"></p>
 
   <button class="dark" onclick="modoOscuro()">
     🌙 Modo oscuro
   </button>
-
 </div>
 
+<div class="app" id="inicio">
+  <div class="crown">👑</div>
+  <div class="bear">🐻</div>
+
+  <h1>¡Hola! 👋</h1>
+  <p class="subtitle">Bienvenido a Goyli 💙</p>
+
+  <div class="menu">
+    <button>🏠 Inicio</button>
+    <button>📚 Materias</button>
+    <button>💬 Chat</button>
+    <button>📢 Avisos</button>
+    <button>🔔 Notificaciones</button>
+    <button>📅 Calendario</button>
+    <button>👤 Perfil</button>
+    <button>👑 Admin</button>
+  </div>
+
+  <button class="logout" onclick="salir()">
+    Cerrar sesión 🚪
+  </button>
+
+  <button class="dark" onclick="modoOscuro()">
+    🌙 Modo oscuro
+  </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function entrar(){
-  alert("¡Bienvenido a Goyli! 🐻👑");
+const SUPABASE_URL = "https://muwrlnzphjkhzsewuges.supabase.co";
+const SUPABASE_KEY = "sb_publishable_C3oaqdeVudp4zyUL071CrQ_XnyB1XLm";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function entrar(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const error = document.getElementById("error");
+
+  error.textContent = "";
+
+  const {error: loginError} =
+    await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if(loginError){
+    error.textContent = "No se pudo iniciar sesión. Revisa tus datos.";
+    return;
+  }
+
+  mostrarInicio();
+}
+
+async function salir(){
+  await supabaseClient.auth.signOut();
+  document.getElementById("inicio").style.display="none";
+  document.getElementById("login").style.display="block";
+}
+
+function mostrarInicio(){
+  document.getElementById("login").style.display="none";
+  document.getElementById("inicio").style.display="block";
 }
 
 function modoOscuro(){
   document.body.classList.toggle("modo-oscuro");
 }
+
+supabaseClient.auth.getSession().then(({data})=>{
+  if(data.session){
+    mostrarInicio();
+  }
+});
 </script>
 
 </body>
-</html>
+  </html>
