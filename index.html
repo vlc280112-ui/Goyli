@@ -52,7 +52,7 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   font-size:16px;
 }
 
-.login, .registro{
+.login, .registro, .btn-enviar{
   width:100%;
   padding:16px;
   margin-top:15px;
@@ -104,7 +104,7 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
 .menu .boton-admin{
   background:linear-gradient(90deg,#fbbf24,#f59e0b);
   color:white;
-  display:none; /* Solo visible para ti */
+  display:none;
 }
 
 .logout{
@@ -130,6 +130,74 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   background:#ede9fe;
   border-radius:12px;
   font-weight:bold;
+}
+
+/* === CHAT === */
+.caja-chat{
+  height:350px;
+  overflow-y:auto;
+  background:white;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+  border:2px solid #e5e7eb;
+}
+
+.mensaje{
+  margin:10px 0;
+  padding:10px 14px;
+  border-radius:18px;
+  max-width:85%;
+  font-size:15px;
+}
+
+.mensaje-tuyo{
+  background:linear-gradient(90deg,#8b5cf6,#ec4899);
+  color:white;
+  margin-left:auto;
+  border-bottom-right-radius:5px;
+}
+
+.mensaje-otro{
+  background:#e5e7eb;
+  color:#1f2937;
+  margin-right:auto;
+  border-bottom-left-radius:5px;
+}
+
+.nombre-quien{
+  font-size:12px;
+  opacity:0.8;
+  margin-bottom:3px;
+  font-weight:bold;
+}
+
+.hora-mensaje{
+  font-size:10px;
+  opacity:0.7;
+  text-align:right;
+  margin-top:4px;
+}
+
+.caja-escribir{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.caja-escribir input{
+  flex:1;
+  padding:12px;
+  border:2px solid #ddd;
+  border-radius:15px;
+  font-size:15px;
+}
+
+.btn-enviar{
+  width:auto;
+  padding:12px 20px;
+  margin:0;
+  border-radius:15px;
 }
 
 /* Panel de colores */
@@ -158,13 +226,15 @@ body.modo-oscuro{
 .modo-oscuro .menu button{background:#34304d;color:white}
 .modo-oscuro .contenido-pantalla{background:#2d2d3f}
 .modo-oscuro .materia{background:#3730a3;color:#e0e7ff}
+.modo-oscuro .caja-chat{background:#1f2937;border-color:#4b5563}
+.modo-oscuro .mensaje-otro{background:#374151;color:white}
 .modo-oscuro .color-opcion.activo{border-color:#fff}
 </style>
 </head>
 
 <body>
 
-<!-- PANTALLA DE INICIO DE SESIÓN -->
+<!-- INICIO DE SESIÓN -->
 <div class="app pantalla" id="login">
   <div class="crown">👑</div><div class="bear">🐻</div>
   <h1>Goyli</h1>
@@ -172,12 +242,12 @@ body.modo-oscuro{
   <input id="email" class="input" type="email" placeholder="📧 Correo electrónico">
   <input id="password" class="input" type="password" placeholder="🔑 Contraseña">
   <button class="login" onclick="entrar()">Entrar 🚀</button>
-  <p id="error" class="error"></p><p id="exito" class="exito"></p>
+  <p id="error" class="error"></p>
   <button class="cambiar-vista" onclick="mostrarRegistro()">✨ ¿No tienes cuenta? Regístrate</button>
   <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
-<!-- PANTALLA DE REGISTRO -->
+<!-- REGISTRO -->
 <div class="app pantalla" id="registro-pantalla">
   <div class="crown">👑</div><div class="bear">🐻</div>
   <h1>Crear Cuenta</h1>
@@ -215,19 +285,16 @@ body.modo-oscuro{
   <h1>🏠 Inicio</h1>
   <p class="subtitle">Tu página principal</p>
   <div class="contenido-pantalla">
-    <p>✅ ¡Bienvenido a tu espacio de clase!</p>
-    <p>📌 Aquí verás tus novedades próximamente.</p>
+    <p>✅ ¡Bienvenido! Entra al Chat 💬 para hablar con todos.</p>
   </div>
-  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
-  <button class="dark" onclick="modoOscuro()">🌙</button>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- PANTALLA MATERIAS -->
+<!-- MATERIAS -->
 <div class="app pantalla" id="pantalla-materias">
   <h1>📚 Tus Materias</h1>
   <p class="subtitle">Tus asignaturas</p>
   <div class="contenido-pantalla">
-    <!-- 👇 PON TUS MATERIAS AQUÍ 👇 -->
     <div class="materia">🔢 Matemáticas</div>
     <div class="materia">📖 Español</div>
     <div class="materia">🔬 Ciencias Naturales</div>
@@ -236,23 +303,28 @@ body.modo-oscuro{
     <div class="materia">🎨 Artes</div>
     <div class="materia">🏀 Educación Física</div>
     <div class="materia">💻 Tecnología</div>
-    <!-- 👆 AGREGA O QUITA LAS QUE NECESITES -->
   </div>
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
-  <button class="dark" onclick="modoOscuro()">🌙</button>
 </div>
 
-<!-- PANTALLA CHAT -->
+<!-- CHAT — TODOS ESCRIBEN Y VEN -->
 <div class="app pantalla" id="pantalla-chat">
-  <h1>💬 Chat</h1>
-  <p class="subtitle">Habla con tus compañeros</p>
-  <div class="contenido-pantalla">
-    <p>🔒 Próximamente: chat en vivo</p>
+  <h1>💬 Chat Goyli</h1>
+  <p class="subtitle">Escribe y todos lo ven</p>
+  
+  <div class="caja-chat" id="caja-chat">
+    <p style="text-align:center; color:#888; font-size:14px">📌 Bienvenidos al chat. Escribe abajo 👇</p>
   </div>
+  
+  <div class="caja-escribir">
+    <input type="text" id="texto-mensaje" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')enviarMensaje()">
+    <button class="btn-enviar" onclick="enviarMensaje()">Enviar ✉️</button>
+  </div>
+  
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- PANTALLA AVISOS -->
+<!-- AVISOS -->
 <div class="app pantalla" id="pantalla-avisos">
   <h1>📢 Avisos</h1>
   <p class="subtitle">Información importante</p>
@@ -262,7 +334,7 @@ body.modo-oscuro{
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- PANTALLA NOTIFICACIONES -->
+<!-- NOTIFICACIONES -->
 <div class="app pantalla" id="pantalla-notificaciones">
   <h1>🔔 Notificaciones</h1>
   <p class="subtitle">Tus alertas</p>
@@ -272,7 +344,7 @@ body.modo-oscuro{
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- PANTALLA CALENDARIO -->
+<!-- CALENDARIO -->
 <div class="app pantalla" id="pantalla-calendario">
   <h1>📅 Calendario</h1>
   <p class="subtitle">Tus fechas importantes</p>
@@ -282,7 +354,7 @@ body.modo-oscuro{
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- PANTALLA PERFIL -->
+<!-- PERFIL -->
 <div class="app pantalla" id="pantalla-perfil">
   <h1>👤 Perfil</h1>
   <p class="subtitle">Tus datos</p>
@@ -293,210 +365,171 @@ body.modo-oscuro{
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- PANEL DE ADMINISTRADOR - SOLO PARA TI -->
+<!-- ADMIN — SOLO TÚ -->
 <div class="app pantalla" id="pantalla-admin">
   <h1>👑 Panel de Administrador</h1>
-  <p class="subtitle">Solo tú puedes entrar aquí</p>
-  
+  <p class="subtitle">Solo tú</p>
   <div class="contenido-pantalla">
-    <h3>🎨 Cambiar colores de la app</h3>
-    <p>Elige tu estilo favorito:</p>
-    
+    <h3>🎨 Cambiar colores</h3>
     <div class="panel-colores">
-      <div class="color-opcion activo" style="background:linear-gradient(135deg,#a78bfa,#60a5fa,#67e8f9,#f9a8d4)" onclick="aplicarColores('original')">
-        Original 💜
-      </div>
-      <div class="color-opcion" style="background:linear-gradient(135deg,#fca5a5,#fcd34d,#86efac)" onclick="aplicarColores('calido')">
-        Cálido 🌅
-      </div>
-      <div class="color-opcion" style="background:linear-gradient(135deg,#34d399,#3b82f6,#8b5cf6)" onclick="aplicarColores('fresco')">
-        Fresco 🌿
-      </div>
-      <div class="color-opcion" style="background:linear-gradient(135deg,#fb923c,#f43f5e,#a855f7)" onclick="aplicarColores('vivo')">
-        Vivo 🔥
-      </div>
+      <div class="color-opcion activo" style="background:linear-gradient(135deg,#a78bfa,#60a5fa,#67e8f9,#f9a8d4)" onclick="aplicarColores('original')">Original 💜</div>
+      <div class="color-opcion" style="background:linear-gradient(135deg,#fca5a5,#fcd34d,#86efac)" onclick="aplicarColores('calido')">Cálido 🌅</div>
+      <div class="color-opcion" style="background:linear-gradient(135deg,#34d399,#3b82f6,#8b5cf6)" onclick="aplicarColores('fresco')">Fresco 🌿</div>
+      <div class="color-opcion" style="background:linear-gradient(135deg,#fb923c,#f43f5e,#a855f7)" onclick="aplicarColores('vivo')">Vivo 🔥</div>
     </div>
   </div>
-  
-  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://muwrlnzphjkhzsewuges.supabase.co";
 const SUPABASE_KEY = "sb_publishable_C3oaqdeVudp4zyUL071CrQ_XnyB1XLm";
-
-// 👇 PON TU CORREO AQUÍ - TÚ SERÁS EL ÚNICO ADMIN
 const TU_CORREO = "vlc280112@gmail.com";
 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+miCorreo = null;
+miNombre = null;
 
 // --- NAVEGACIÓN ---
-function ocultarTodas(){
-  document.querySelectorAll('.pantalla').forEach(p => p.style.display = 'none');
-}
-
-function mostrarPantalla(id){
-  ocultarTodas();
-  document.getElementById(id).style.display = 'block';
-  if(id === 'pantalla-perfil') llenarPerfil();
-}
-
+function ocultarTodas(){ document.querySelectorAll('.pantalla').forEach(p => p.style.display='none'); }
+function mostrarPantalla(id){ ocultarTodas(); document.getElementById(id).style.display='block'; if(id==='pantalla-perfil')llenarPerfil(); if(id==='pantalla-chat')cargarMensajes(); }
 function mostrarRegistro(){ mostrarPantalla('registro-pantalla'); limpiarMensajes(); }
 function mostrarLogin(){ mostrarPantalla('login'); limpiarMensajes(); }
-function limpiarMensajes(){
-  document.getElementById("error").textContent = "";
-  document.getElementById("exito").textContent = "";
-  document.getElementById("error-registro").textContent = "";
-}
+function limpiarMensajes(){ document.getElementById("error").textContent=""; document.getElementById("error-registro").textContent=""; }
 
 // --- REGISTRO ---
 async function registrarse(){
-  const nombre = document.getElementById("nombre").value.trim();
-  const email = document.getElementById("email-registro").value.trim();
-  const password = document.getElementById("password-registro").value;
-  const error = document.getElementById("error-registro");
-  error.textContent = "";
+  const nombre=document.getElementById("nombre").value.trim();
+  const email=document.getElementById("email-registro").value.trim();
+  const pass=document.getElementById("password-registro").value;
+  const error=document.getElementById("error-registro");
+  if(!nombre||!email||!pass){error.textContent="⚠️ Llena todo";return;}
+  if(pass.length<6){error.textContent="⚠️ Mínimo 6 caracteres";return;}
   
-  if(!nombre || !email || !password){
-    error.textContent = "⚠️ Llena todos los campos";
-    return;
-  }
-  if(password.length < 6){
-    error.textContent = "⚠️ Contraseña de mínimo 6 caracteres";
-    return;
-  }
-
-  const {error: signUpError} = await supabaseClient.auth.signUp({
-    email, password, options: { data: { nombre } }
-  });
-
-  if(signUpError){
-    error.textContent = "❌ " + signUpError.message;
-    return;
-  }
-
-  alert("✅ ¡Cuenta creada! Ya puedes entrar 😊");
+  const {error:e}=await supabase.auth.signUp({email,password:pass,options:{data:{nombre}}});
+  if(e){error.textContent="❌ "+e.message;return;}
+  alert("✅ ¡Cuenta creada! Ya entra 😊");
   mostrarLogin();
 }
 
-// --- INICIO DE SESIÓN ---
+// --- INICIAR SESIÓN ---
 async function entrar(){
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const error = document.getElementById("error");
-  error.textContent = "";
-
-  if(!email || !password){
-    error.textContent = "⚠️ Escribe tu correo y contraseña";
-    return;
-  }
-
-  const {error: loginError} = await supabaseClient.auth.signInWithPassword({email, password});
-  if(loginError){
-    error.textContent = "❌ " + loginError.message;
-    return;
-  }
-
-  await mostrarInicioConNombre(email);
-}
-
-// --- MOSTRAR NOMBRE Y BOTÓN DE ADMIN ---
-async function mostrarInicioConNombre(correoUsuario){
-  const {data} = await supabaseClient.auth.getSession();
-  if(data.session?.user){
-    const nombre = data.session.user.user_metadata?.nombre || "Amigo";
-    document.getElementById("saludo").textContent = `¡Hola, ${nombre}! 👋`;
-    
-    // SOLO TÚ ves el botón de Admin
-    const botonAdmin = document.getElementById("boton-admin");
-    if(correoUsuario === TU_CORREO){
-      botonAdmin.style.display = "block"; // Solo tú lo ves ✅
-    } else {
-      botonAdmin.style.display = "none"; // Nadie más lo ve ❌
-    }
-  }
+  const email=document.getElementById("email").value.trim();
+  const pass=document.getElementById("password").value;
+  const error=document.getElementById("error");
+  if(!email||!pass){error.textContent="⚠️ Escribe tus datos";return;}
+  
+  const {error:e,data}=await supabase.auth.signInWithPassword({email,password:pass});
+  if(e){error.textContent="❌ "+e.message;return;}
+  
+  miCorreo = email;
+  miNombre = data.user.user_metadata?.nombre || "Amigo";
+  document.getElementById("saludo").textContent = `¡Hola, ${miNombre}! 👋`;
+  document.getElementById("boton-admin").style.display = email===TU_CORREO?"block":"none";
   mostrarPantalla('inicio');
 }
 
-// --- LLENAR PERFIL ---
+// --- PERFIL ---
 async function llenarPerfil(){
-  const {data} = await supabaseClient.auth.getSession();
-  if(data.session?.user){
-    const usuario = data.session.user;
-    document.getElementById("nombre-perfil").textContent = usuario.user_metadata?.nombre || "No especificado";
-    document.getElementById("correo-perfil").textContent = usuario.email;
+  const {data}=await supabase.auth.getSession();
+  if(data?.session?.user){
+    const u=data.session.user;
+    document.getElementById("nombre-perfil").textContent=u.user_metadata?.nombre||"No especificado";
+    document.getElementById("correo-perfil").textContent=u.email;
   }
 }
 
 // --- CERRAR SESIÓN ---
-async function salir(){
-  await supabaseClient.auth.signOut();
-  mostrarLogin();
-}
+async function salir(){ await supabase.auth.signOut(); mostrarLogin(); }
 
 // --- MODO OSCURO ---
-function modoOscuro(){
-  document.body.classList.toggle("modo-oscuro");
+function modoOscuro(){ document.body.classList.toggle("modo-oscuro"); }
+
+// --- CAMBIAR COLORES ---
+function aplicarColores(estilo){
+  const r=document.documentElement.style;
+  document.querySelectorAll('.color-opcion').forEach(b=>b.classList.remove('activo'));
+  event.target.classList.add('activo');
+  const c={
+    original:['#6d28d9','#a78bfa','#60a5fa','#67e8f9','#f9a8d4','#8b5cf6','#ec4899'],
+    calido:['#c2410c','#fca5a5','#fcd34d','#86efac','#fde68a','#f97316','#eab308'],
+    fresco:['#0f766e','#34d399','#3b82f6','#8b5cf6','#93c5fd','#10b981','#3b82f6'],
+    vivo:['#be185d','#fb923c','#f43f5e','#a855f7','#f0abfc','#f97316','#ec4899']
+  }[estilo];
+  r.setProperty('--color-primario',c[0]);
+  r.setProperty('--color-fondo1',c[1]);
+  r.setProperty('--color-fondo2',c[2]);
+  r.setProperty('--color-fondo3',c[3]);
+  r.setProperty('--color-fondo4',c[4]);
+  r.setProperty('--color-boton1',c[5]);
+  r.setProperty('--color-boton2',c[6]);
 }
 
-// --- CAMBIAR COLORES 🎨 ---
-function aplicarColores(estilo){
-  const raiz = document.documentElement.style;
-  document.querySelectorAll('.color-opcion').forEach(b => b.classList.remove('activo'));
-  event.target.classList.add('activo');
+// === CHAT: TODOS ENVIAN Y VEN ===
+let suscripcionChat = null;
 
-  switch(estilo){
-    case 'original':
-      raiz.setProperty('--color-primario','#6d28d9');
-      raiz.setProperty('--color-fondo1','#a78bfa');
-      raiz.setProperty('--color-fondo2','#60a5fa');
-      raiz.setProperty('--color-fondo3','#67e8f9');
-      raiz.setProperty('--color-fondo4','#f9a8d4');
-      raiz.setProperty('--color-boton1','#8b5cf6');
-      raiz.setProperty('--color-boton2','#ec4899');
-      break;
-    case 'calido':
-      raiz.setProperty('--color-primario','#c2410c');
-      raiz.setProperty('--color-fondo1','#fca5a5');
-      raiz.setProperty('--color-fondo2','#fcd34d');
-      raiz.setProperty('--color-fondo3','#86efac');
-      raiz.setProperty('--color-fondo4','#fde68a');
-      raiz.setProperty('--color-boton1','#f97316');
-      raiz.setProperty('--color-boton2','#eab308');
-      break;
-    case 'fresco':
-      raiz.setProperty('--color-primario','#0f766e');
-      raiz.setProperty('--color-fondo1','#34d399');
-      raiz.setProperty('--color-fondo2','#3b82f6');
-      raiz.setProperty('--color-fondo3','#8b5cf6');
-      raiz.setProperty('--color-fondo4','#93c5fd');
-      raiz.setProperty('--color-boton1','#10b981');
-      raiz.setProperty('--color-boton2','#3b82f6');
-      break;
-    case 'vivo':
-      raiz.setProperty('--color-primario','#be185d');
-      raiz.setProperty('--color-fondo1','#fb923c');
-      raiz.setProperty('--color-fondo2','#f43f5e');
-      raiz.setProperty('--color-fondo3','#a855f7');
-      raiz.setProperty('--color-fondo4','#f0abfc');
-      raiz.setProperty('--color-boton1','#f97316');
-      raiz.setProperty('--color-boton2','#ec4899');
-      break;
+async function cargarMensajes(){
+  // Cargar mensajes antiguos
+  const {data:mensajes}=await supabase.from('chat').select('*').order('created_at',{ascending:true});
+  dibujarMensajes(mensajes || []);
+  
+  // Escuchar mensajes NUEVOS en tiempo real
+  if(!suscripcionChat){
+    suscripcionChat = supabase.channel('chat-en-vivo')
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'chat'},
+        (msg)=>{ agregarMensaje(msg.new); })
+      .subscribe();
   }
 }
 
-// --- RECORDAR SESIÓN ---
+function dibujarMensajes(lista){
+  const caja=document.getElementById("caja-chat");
+  caja.innerHTML='<p style="text-align:center; color:#888; font-size:14px">📌 Bienvenidos al chat 👇</p>';
+  lista.forEach(m=>agregarMensaje(m));
+}
+
+function agregarMensaje(m){
+  const caja=document.getElementById("caja-chat");
+  const tuyo = m.quien === miNombre;
+  const hora = new Date(m.created_at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  
+  const div=document.createElement("div");
+  div.className = `mensaje ${tuyo?'mensaje-tuyo':'mensaje-otro'}`;
+  div.innerHTML = !tuyo ? `<div class="nombre-quien">${m.quien}</div>` : '';
+  div.innerHTML += `<div>${m.texto}</div><div class="hora-mensaje">${hora}</div>`;
+  
+  caja.appendChild(div);
+  caja.scrollTop = caja.scrollHeight; // Bajar automáticamente
+}
+
+async function enviarMensaje(){
+  const texto=document.getElementById("texto-mensaje").value.trim();
+  if(!texto) return;
+  
+  await supabase.from('chat').insert([{
+    quien: miNombre,
+    texto: texto
+  }]);
+  
+  document.getElementById("texto-mensaje").value='';
+}
+
+// --- REVISAR SESIÓN AL CARGAR ---
 window.onload = async function(){
-  const {data} = await supabaseClient.auth.getSession();
-  if(data.session){
-    await mostrarInicioConNombre(data.session.user.email);
+  const {data} = await supabase.auth.getSession();
+  if(data?.session){
+    miCorreo = data.session.user.email;
+    miNombre = data.session.user.user_metadata?.nombre || "Amigo";
+    document.getElementById("saludo").textContent = `¡Hola, ${miNombre}! 👋`;
+    document.getElementById("boton-admin").style.display = miCorreo===TU_CORREO?"block":"none";
+    mostrarPantalla('inicio');
   } else {
-    mostrarPantalla('login');
+    mostrarLogin();
   }
 };
 </script>
 
 </body>
-    </html>
-  
+  </html>
+                                                             
