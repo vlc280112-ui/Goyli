@@ -58,7 +58,7 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   background:linear-gradient(90deg,#10b981,#3b82f6);
 }
 
-.dark, .cambiar-vista{
+.dark, .cambiar-vista, .volver{
   margin-top:18px;
   border:0;
   background:#eee;
@@ -79,7 +79,7 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   font-size:14px;
 }
 
-#inicio, #registro-pantalla{display:none}
+.pantalla{display:none}
 
 .menu{
   display:grid;
@@ -95,6 +95,11 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   font-size:16px;
   background:#f3e8ff;
   cursor:pointer;
+  transition:transform 0.2s;
+}
+
+.menu button:active{
+  transform:scale(0.95);
 }
 
 .logout{
@@ -104,6 +109,14 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   border-radius:15px;
   background:#fee2e2;
   cursor:pointer;
+}
+
+.contenido-pantalla{
+  margin-top:20px;
+  text-align:left;
+  padding:15px;
+  background:#f9fafb;
+  border-radius:15px;
 }
 
 body.modo-oscuro{
@@ -125,7 +138,7 @@ body.modo-oscuro{
   border-color:#555;
 }
 
-.modo-oscuro .dark, .modo-oscuro .cambiar-vista{
+.modo-oscuro .dark, .modo-oscuro .cambiar-vista, .modo-oscuro .volver{
   background:#444;
   color:white;
 }
@@ -134,99 +147,158 @@ body.modo-oscuro{
   background:#34304d;
   color:white;
 }
+
+.modo-oscuro .contenido-pantalla{
+  background:#2d2d3f;
+}
 </style>
 </head>
 
 <body>
 
 <!-- PANTALLA DE INICIO DE SESIÓN -->
-<div class="app" id="login">
+<div class="app pantalla" id="login">
   <div class="crown">👑</div>
   <div class="bear">🐻</div>
-
   <h1>Goyli</h1>
   <p class="subtitle">Tu espacio de clase 💙</p>
 
-  <input id="email" class="input" type="email"
-    placeholder="📧 Correo electrónico">
+  <input id="email" class="input" type="email" placeholder="📧 Correo electrónico">
+  <input id="password" class="input" type="password" placeholder="🔑 Contraseña">
 
-  <input id="password" class="input" type="password"
-    placeholder="🔑 Contraseña">
-
-  <button class="login" onclick="entrar()">
-    Entrar 🚀
-  </button>
-
+  <button class="login" onclick="entrar()">Entrar 🚀</button>
   <p id="error" class="error"></p>
   <p id="exito" class="exito"></p>
 
-  <button class="cambiar-vista" onclick="mostrarRegistro()">
-    ✨ ¿No tienes cuenta? Regístrate
-  </button>
-
-  <button class="dark" onclick="modoOscuro()">
-    🌙 Modo oscuro
-  </button>
+  <button class="cambiar-vista" onclick="mostrarRegistro()">✨ ¿No tienes cuenta? Regístrate</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
 <!-- PANTALLA DE REGISTRO -->
-<div class="app" id="registro-pantalla">
+<div class="app pantalla" id="registro-pantalla">
   <div class="crown">👑</div>
   <div class="bear">🐻</div>
-
   <h1>Crear Cuenta</h1>
   <p class="subtitle">Únete a Goyli 💙</p>
 
-  <input id="nombre" class="input" type="text"
-    placeholder="👤 Tu nombre">
+  <input id="nombre" class="input" type="text" placeholder="👤 Tu nombre">
+  <input id="email-registro" class="input" type="email" placeholder="📧 Correo electrónico">
+  <input id="password-registro" class="input" type="password" placeholder="🔑 Contraseña (mínimo 6 caracteres)">
 
-  <input id="email-registro" class="input" type="email"
-    placeholder="📧 Correo electrónico">
-
-  <input id="password-registro" class="input" type="password"
-    placeholder="🔑 Contraseña (mínimo 6 caracteres)">
-
-  <button class="registro" onclick="registrarse()">
-    Crear cuenta ✨
-  </button>
-
+  <button class="registro" onclick="registrarse()">Crear cuenta ✨</button>
   <p id="error-registro" class="error"></p>
 
-  <button class="cambiar-vista" onclick="mostrarLogin()">
-    🔑 ¿Ya tienes cuenta? Entrar
-  </button>
-
-  <button class="dark" onclick="modoOscuro()">
-    🌙 Modo oscuro
-  </button>
+  <button class="cambiar-vista" onclick="mostrarLogin()">🔑 ¿Ya tienes cuenta? Entrar</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
-<!-- PANTALLA PRINCIPAL -->
-<div class="app" id="inicio">
+<!-- PANTALLA PRINCIPAL / MENÚ -->
+<div class="app pantalla" id="inicio">
   <div class="crown">👑</div>
   <div class="bear">🐻</div>
-
   <h1 id="saludo">¡Hola! 👋</h1>
   <p class="subtitle">Bienvenido a Goyli 💙</p>
 
   <div class="menu">
-    <button>🏠 Inicio</button>
-    <button>📚 Materias</button>
-    <button>💬 Chat</button>
-    <button>📢 Avisos</button>
-    <button>🔔 Notificaciones</button>
-    <button>📅 Calendario</button>
-    <button>👤 Perfil</button>
-    <button>👑 Admin</button>
+    <button onclick="mostrarPantalla('pantalla-inicio')">🏠 Inicio</button>
+    <button onclick="mostrarPantalla('pantalla-materias')">📚 Materias</button>
+    <button onclick="mostrarPantalla('pantalla-chat')">💬 Chat</button>
+    <button onclick="mostrarPantalla('pantalla-avisos')">📢 Avisos</button>
+    <button onclick="mostrarPantalla('pantalla-notificaciones')">🔔 Notificaciones</button>
+    <button onclick="mostrarPantalla('pantalla-calendario')">📅 Calendario</button>
+    <button onclick="mostrarPantalla('pantalla-perfil')">👤 Perfil</button>
+    <button onclick="mostrarPantalla('pantalla-admin')">👑 Admin</button>
   </div>
 
-  <button class="logout" onclick="salir()">
-    Cerrar sesión 🚪
-  </button>
+  <button class="logout" onclick="salir()">Cerrar sesión 🚪</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
 
-  <button class="dark" onclick="modoOscuro()">
-    🌙 Modo oscuro
-  </button>
+<!-- PANTALLAS INTERNAS -->
+<div class="app pantalla" id="pantalla-inicio">
+  <h1>🏠 Inicio</h1>
+  <p class="subtitle">Tu página principal</p>
+  <div class="contenido-pantalla">
+    <p>✅ ¡Bienvenido a tu espacio de clase!</p>
+    <p>📌 Aquí verás tus novedades próximamente.</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-materias">
+  <h1>📚 Materias</h1>
+  <p class="subtitle">Tus asignaturas</p>
+  <div class="contenido-pantalla">
+    <p>🔢 Matemáticas</p>
+    <p>📖 Español</p>
+    <p>🔬 Ciencias</p>
+    <p>🌎 Historia</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-chat">
+  <h1>💬 Chat</h1>
+  <p class="subtitle">Habla con tus compañeros</p>
+  <div class="contenido-pantalla">
+    <p>🔒 Próximamente: chat en vivo</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-avisos">
+  <h1>📢 Avisos</h1>
+  <p class="subtitle">Información importante</p>
+  <div class="contenido-pantalla">
+    <p>📌 No hay avisos nuevos</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-notificaciones">
+  <h1>🔔 Notificaciones</h1>
+  <p class="subtitle">Tus alertas</p>
+  <div class="contenido-pantalla">
+    <p>✅ Todo al día</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-calendario">
+  <h1>📅 Calendario</h1>
+  <p class="subtitle">Tus fechas importantes</p>
+  <div class="contenido-pantalla">
+    <p>📌 Sin eventos programados</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-perfil">
+  <h1>👤 Perfil</h1>
+  <p class="subtitle">Tus datos</p>
+  <div class="contenido-pantalla">
+    <p><strong>Nombre:</strong> <span id="nombre-perfil"></span></p>
+    <p><strong>Correo:</strong> <span id="correo-perfil"></span></p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
+</div>
+
+<div class="app pantalla" id="pantalla-admin">
+  <h1>👑 Admin</h1>
+  <p class="subtitle">Panel de control</p>
+  <div class="contenido-pantalla">
+    <p>🔧 Opciones para administradores</p>
+    <p>🚧 En construcción</p>
+  </div>
+  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver al menú</button>
+  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -237,24 +309,29 @@ const SUPABASE_KEY = "sb_publishable_C3oaqdeVudp4zyUL071CrQ_XnyB1XLm";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// --- FUNCIONES DE NAVEGACIÓN ---
+// --- CAMBIAR DE PANTALLA ---
+function ocultarTodas(){
+  document.querySelectorAll('.pantalla').forEach(p => p.style.display = 'none');
+}
+
+function mostrarPantalla(id){
+  ocultarTodas();
+  document.getElementById(id).style.display = 'block';
+  
+  // Si es perfil, llenar los datos
+  if(id === 'pantalla-perfil'){
+    llenarPerfil();
+  }
+}
+
 function mostrarRegistro(){
-  document.getElementById("login").style.display = "none";
-  document.getElementById("registro-pantalla").style.display = "block";
+  mostrarPantalla('registro-pantalla');
   limpiarMensajes();
 }
 
 function mostrarLogin(){
-  document.getElementById("registro-pantalla").style.display = "none";
-  document.getElementById("inicio").style.display = "none";
-  document.getElementById("login").style.display = "block";
+  mostrarPantalla('login');
   limpiarMensajes();
-}
-
-function mostrarInicio(){
-  document.getElementById("login").style.display = "none";
-  document.getElementById("registro-pantalla").style.display = "none";
-  document.getElementById("inicio").style.display = "block";
 }
 
 function limpiarMensajes(){
@@ -282,12 +359,10 @@ async function registrarse(){
     return;
   }
 
-  const {data, error: signUpError} = await supabaseClient.auth.signUp({
+  const {error: signUpError} = await supabaseClient.auth.signUp({
     email: email,
     password: password,
-    options: {
-      data: { nombre: nombre }
-    }
+    options: { data: { nombre: nombre } }
   });
 
   if(signUpError){
@@ -295,7 +370,6 @@ async function registrarse(){
     return;
   }
 
-  // Éxito
   alert("✅ ¡Cuenta creada! Ya puedes entrar 😊");
   mostrarLogin();
   document.getElementById("exito").textContent = "✅ Cuenta creada con éxito. ¡Inicia sesión!";
@@ -324,17 +398,27 @@ async function entrar(){
     return;
   }
 
-  mostrarInicioConNombre();
+  await mostrarInicioConNombre();
 }
 
-// --- MOSTRAR INICIO CON NOMBRE ---
+// --- MOSTRAR NOMBRE EN SALUDO ---
 async function mostrarInicioConNombre(){
   const {data} = await supabaseClient.auth.getSession();
   if(data.session?.user){
     const nombre = data.session.user.user_metadata?.nombre || "Amigo";
     document.getElementById("saludo").textContent = `¡Hola, ${nombre}! 👋`;
   }
-  mostrarInicio();
+  mostrarPantalla('inicio');
+}
+
+// --- LLENAR DATOS EN PERFIL ---
+async function llenarPerfil(){
+  const {data} = await supabaseClient.auth.getSession();
+  if(data.session?.user){
+    const usuario = data.session.user;
+    document.getElementById("nombre-perfil").textContent = usuario.user_metadata?.nombre || "No especificado";
+    document.getElementById("correo-perfil").textContent = usuario.email;
+  }
 }
 
 // --- CERRAR SESIÓN ---
@@ -348,22 +432,17 @@ function modoOscuro(){
   document.body.classList.toggle("modo-oscuro");
 }
 
-// --- RECORDAR SESIÓN ---
-supabaseClient.auth.onAuthStateChange((event, session) => {
-  if(session){
-    mostrarInicioConNombre();
-  }
-});
-
-// Al cargar la página, revisar si ya hay sesión
+// --- RECORDAR SESIÓN AL CARGAR ---
 window.onload = async function(){
   const {data} = await supabaseClient.auth.getSession();
   if(data.session){
-    mostrarInicioConNombre();
+    await mostrarInicioConNombre();
+  } else {
+    mostrarPantalla('login');
   }
 };
 </script>
 
 </body>
-    </html>
-  
+  </html>
+      
