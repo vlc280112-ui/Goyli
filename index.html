@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Goyli 🐻👑</title>
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-
 :root{
   --color-primario:#6d28d9;
   --color-fondo1:#a78bfa;
@@ -17,7 +15,6 @@
   --color-boton1:#8b5cf6;
   --color-boton2:#ec4899;
 }
-
 body{
   min-height:100vh;
   display:flex;
@@ -25,9 +22,7 @@ body{
   align-items:center;
   background:linear-gradient(135deg,var(--color-fondo1),var(--color-fondo2),var(--color-fondo3),var(--color-fondo4));
   padding:20px;
-  transition: all 0.5s ease;
 }
-
 .app{
   width:100%;
   max-width:420px;
@@ -37,12 +32,10 @@ body{
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,.18);
 }
-
 .bear{font-size:80px}
 .crown{font-size:35px}
 h1{font-size:42px;color:var(--color-primario);margin:8px}
 .subtitle{color:#666;margin-bottom:25px}
-
 .input{
   width:100%;
   padding:16px;
@@ -51,7 +44,6 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   border-radius:18px;
   font-size:16px;
 }
-
 .login, .registro, .btn-enviar{
   width:100%;
   padding:16px;
@@ -64,12 +56,8 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   font-weight:bold;
   cursor:pointer;
 }
-
-.registro{
-  background:linear-gradient(90deg,#10b981,#3b82f6);
-}
-
-.dark, .cambiar-vista, .volver, .btn-colores{
+.registro{background:linear-gradient(90deg,#10b981,#3b82f6)}
+.dark, .cambiar-vista, .volver{
   margin-top:12px;
   border:0;
   background:#eee;
@@ -77,19 +65,14 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   border-radius:15px;
   cursor:pointer;
 }
-
 .error{color:#dc2626;margin-top:12px;font-size:14px}
-.exito{color:#16a34a;margin-top:12px;font-size:14px}
-
 .pantalla{display:none}
-
 .menu{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
   margin-top:20px;
 }
-
 .menu button{
   padding:15px;
   border:0;
@@ -97,16 +80,12 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   font-size:16px;
   background:#f3e8ff;
   cursor:pointer;
-  transition:transform 0.2s;
 }
-.menu button:active{transform:scale(0.95)}
-
 .menu .boton-admin{
   background:linear-gradient(90deg,#fbbf24,#f59e0b);
   color:white;
   display:none;
 }
-
 .logout{
   margin-top:20px;
   padding:12px 20px;
@@ -115,7 +94,6 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   background:#fee2e2;
   cursor:pointer;
 }
-
 .contenido-pantalla{
   margin-top:20px;
   text-align:left;
@@ -123,7 +101,6 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   background:#f9fafb;
   border-radius:15px;
 }
-
 .materia{
   padding:12px;
   margin:8px 0;
@@ -131,10 +108,8 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   border-radius:12px;
   font-weight:bold;
 }
-
-/* === CHAT === */
 .caja-chat{
-  height:350px;
+  height:300px;
   overflow-y:auto;
   background:white;
   border-radius:15px;
@@ -142,7 +117,6 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   margin-bottom:15px;
   border:2px solid #e5e7eb;
 }
-
 .mensaje{
   margin:10px 0;
   padding:10px 14px;
@@ -150,41 +124,29 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   max-width:85%;
   font-size:15px;
 }
-
 .mensaje-tuyo{
   background:linear-gradient(90deg,#8b5cf6,#ec4899);
   color:white;
   margin-left:auto;
   border-bottom-right-radius:5px;
 }
-
 .mensaje-otro{
   background:#e5e7eb;
   color:#1f2937;
   margin-right:auto;
   border-bottom-left-radius:5px;
 }
-
 .nombre-quien{
   font-size:12px;
   opacity:0.8;
   margin-bottom:3px;
   font-weight:bold;
 }
-
-.hora-mensaje{
-  font-size:10px;
-  opacity:0.7;
-  text-align:right;
-  margin-top:4px;
-}
-
 .caja-escribir{
   display:flex;
   gap:8px;
   margin-top:10px;
 }
-
 .caja-escribir input{
   flex:1;
   padding:12px;
@@ -192,49 +154,23 @@ h1{font-size:42px;color:var(--color-primario);margin:8px}
   border-radius:15px;
   font-size:15px;
 }
-
 .btn-enviar{
   width:auto;
-  padding:12px 20px;
+  padding:12px 16px;
   margin:0;
   border-radius:15px;
 }
-
-/* Panel de colores */
-.panel-colores{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
-}
-.color-opcion{
-  padding:15px;
-  border-radius:12px;
-  cursor:pointer;
-  border:3px solid transparent;
-}
-.color-opcion.activo{border-color:#000;font-weight:bold}
-
-/* Modo oscuro */
 body.modo-oscuro{
   background:linear-gradient(135deg,#171329,#172554,#164e63);
 }
 .modo-oscuro .app{background:#202033;color:white}
-.modo-oscuro .subtitle{color:#ccc}
-.modo-oscuro .input{background:#303047;color:white;border-color:#555}
-.modo-oscuro .dark, .modo-oscuro .cambiar-vista, .modo-oscuro .volver, .modo-oscuro .btn-colores{background:#444;color:white}
-.modo-oscuro .menu button{background:#34304d;color:white}
 .modo-oscuro .contenido-pantalla{background:#2d2d3f}
-.modo-oscuro .materia{background:#3730a3;color:#e0e7ff}
 .modo-oscuro .caja-chat{background:#1f2937;border-color:#4b5563}
 .modo-oscuro .mensaje-otro{background:#374151;color:white}
-.modo-oscuro .color-opcion.activo{border-color:#fff}
 </style>
 </head>
-
 <body>
 
-<!-- INICIO DE SESIÓN -->
 <div class="app pantalla" id="login">
   <div class="crown">👑</div><div class="bear">🐻</div>
   <h1>Goyli</h1>
@@ -247,7 +183,6 @@ body.modo-oscuro{
   <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
-<!-- REGISTRO -->
 <div class="app pantalla" id="registro-pantalla">
   <div class="crown">👑</div><div class="bear">🐻</div>
   <h1>Crear Cuenta</h1>
@@ -261,7 +196,6 @@ body.modo-oscuro{
   <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
-<!-- MENÚ PRINCIPAL -->
 <div class="app pantalla" id="inicio">
   <div class="crown">👑</div><div class="bear">🐻</div>
   <h1 id="saludo">¡Hola! 👋</h1>
@@ -271,26 +205,22 @@ body.modo-oscuro{
     <button onclick="mostrarPantalla('pantalla-materias')">📚 Materias</button>
     <button onclick="mostrarPantalla('pantalla-chat')">💬 Chat</button>
     <button onclick="mostrarPantalla('pantalla-avisos')">📢 Avisos</button>
-    <button onclick="mostrarPantalla('pantalla-notificaciones')">🔔 Notificaciones</button>
-    <button onclick="mostrarPantalla('pantalla-calendario')">📅 Calendario</button>
     <button onclick="mostrarPantalla('pantalla-perfil')">👤 Perfil</button>
     <button id="boton-admin" class="boton-admin" onclick="mostrarPantalla('pantalla-admin')">👑 Admin</button>
   </div>
   <button class="logout" onclick="salir()">Cerrar sesión 🚪</button>
-  <button class="dark" onclick="modoOscuro()">🌙 Modo oscuro</button>
 </div>
 
-<!-- PANTALLA INICIO -->
 <div class="app pantalla" id="pantalla-inicio">
   <h1>🏠 Inicio</h1>
   <p class="subtitle">Tu página principal</p>
   <div class="contenido-pantalla">
-    <p>✅ ¡Bienvenido! Entra al Chat 💬 para hablar con todos.</p>
+    <p>✅ ¡Bienvenido a Goyli!</p>
+    <p>💬 Entra al chat para hablar con todos</p>
   </div>
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- MATERIAS -->
 <div class="app pantalla" id="pantalla-materias">
   <h1>📚 Tus Materias</h1>
   <p class="subtitle">Tus asignaturas</p>
@@ -301,30 +231,23 @@ body.modo-oscuro{
     <div class="materia">🌎 Historia</div>
     <div class="materia">🗺️ Geografía</div>
     <div class="materia">🎨 Artes</div>
-    <div class="materia">🏀 Educación Física</div>
-    <div class="materia">💻 Tecnología</div>
   </div>
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- CHAT — TODOS ESCRIBEN Y VEN -->
 <div class="app pantalla" id="pantalla-chat">
   <h1>💬 Chat Goyli</h1>
-  <p class="subtitle">Escribe y todos lo ven</p>
-  
+  <p class="subtitle">Todos ven tus mensajes</p>
   <div class="caja-chat" id="caja-chat">
-    <p style="text-align:center; color:#888; font-size:14px">📌 Bienvenidos al chat. Escribe abajo 👇</p>
+    <p style="text-align:center; color:#888; font-size:14px">📌 Bienvenidos al chat 👇</p>
   </div>
-  
   <div class="caja-escribir">
     <input type="text" id="texto-mensaje" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')enviarMensaje()">
     <button class="btn-enviar" onclick="enviarMensaje()">Enviar ✉️</button>
   </div>
-  
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- AVISOS -->
 <div class="app pantalla" id="pantalla-avisos">
   <h1>📢 Avisos</h1>
   <p class="subtitle">Información importante</p>
@@ -334,27 +257,6 @@ body.modo-oscuro{
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- NOTIFICACIONES -->
-<div class="app pantalla" id="pantalla-notificaciones">
-  <h1>🔔 Notificaciones</h1>
-  <p class="subtitle">Tus alertas</p>
-  <div class="contenido-pantalla">
-    <p>✅ Todo al día</p>
-  </div>
-  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
-</div>
-
-<!-- CALENDARIO -->
-<div class="app pantalla" id="pantalla-calendario">
-  <h1>📅 Calendario</h1>
-  <p class="subtitle">Tus fechas importantes</p>
-  <div class="contenido-pantalla">
-    <p>📌 Sin eventos programados</p>
-  </div>
-  <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
-</div>
-
-<!-- PERFIL -->
 <div class="app pantalla" id="pantalla-perfil">
   <h1>👤 Perfil</h1>
   <p class="subtitle">Tus datos</p>
@@ -365,18 +267,12 @@ body.modo-oscuro{
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
 
-<!-- ADMIN — SOLO TÚ -->
 <div class="app pantalla" id="pantalla-admin">
-  <h1>👑 Panel de Administrador</h1>
-  <p class="subtitle">Solo tú</p>
+  <h1>👑 Panel de Admin</h1>
+  <p class="subtitle">Solo tú puedes entrar</p>
   <div class="contenido-pantalla">
-    <h3>🎨 Cambiar colores</h3>
-    <div class="panel-colores">
-      <div class="color-opcion activo" style="background:linear-gradient(135deg,#a78bfa,#60a5fa,#67e8f9,#f9a8d4)" onclick="aplicarColores('original')">Original 💜</div>
-      <div class="color-opcion" style="background:linear-gradient(135deg,#fca5a5,#fcd34d,#86efac)" onclick="aplicarColores('calido')">Cálido 🌅</div>
-      <div class="color-opcion" style="background:linear-gradient(135deg,#34d399,#3b82f6,#8b5cf6)" onclick="aplicarColores('fresco')">Fresco 🌿</div>
-      <div class="color-opcion" style="background:linear-gradient(135deg,#fb923c,#f43f5e,#a855f7)" onclick="aplicarColores('vivo')">Vivo 🔥</div>
-    </div>
+    <p>✅ Eres el administrador</p>
+    <p>🚧 Aquí podrás controlar todo próximamente</p>
   </div>
   <button class="volver" onclick="mostrarPantalla('inicio')">⬅️ Volver</button>
 </div>
@@ -388,148 +284,115 @@ const SUPABASE_KEY = "sb_publishable_C3oaqdeVudp4zyUL071CrQ_XnyB1XLm";
 const TU_CORREO = "vlc280112@gmail.com";
 
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-miCorreo = null;
-miNombre = null;
+let miCorreo = null, miNombre = null;
 
-// --- NAVEGACIÓN ---
-function ocultarTodas(){ document.querySelectorAll('.pantalla').forEach(p => p.style.display='none'); }
-function mostrarPantalla(id){ ocultarTodas(); document.getElementById(id).style.display='block'; if(id==='pantalla-perfil')llenarPerfil(); if(id==='pantalla-chat')cargarMensajes(); }
-function mostrarRegistro(){ mostrarPantalla('registro-pantalla'); limpiarMensajes(); }
-function mostrarLogin(){ mostrarPantalla('login'); limpiarMensajes(); }
-function limpiarMensajes(){ document.getElementById("error").textContent=""; document.getElementById("error-registro").textContent=""; }
+function ocultarTodas(){ document.querySelectorAll('.pantalla').forEach(p => p.style.display = 'none'); }
+function mostrarPantalla(id){
+  ocultarTodas();
+  document.getElementById(id).style.display = 'block';
+  if(id === 'pantalla-perfil') llenarPerfil();
+  if(id === 'pantalla-chat') cargarMensajes();
+}
+function mostrarRegistro(){ mostrarPantalla('registro-pantalla'); }
+function mostrarLogin(){ mostrarPantalla('login'); }
 
-// --- REGISTRO ---
 async function registrarse(){
-  const nombre=document.getElementById("nombre").value.trim();
-  const email=document.getElementById("email-registro").value.trim();
-  const pass=document.getElementById("password-registro").value;
-  const error=document.getElementById("error-registro");
-  if(!nombre||!email||!pass){error.textContent="⚠️ Llena todo";return;}
-  if(pass.length<6){error.textContent="⚠️ Mínimo 6 caracteres";return;}
+  const nombre = document.getElementById("nombre").value.trim();
+  const email = document.getElementById("email-registro").value.trim();
+  const pass = document.getElementById("password-registro").value;
+  const error = document.getElementById("error-registro");
+  if(!nombre || !email || !pass){ error.textContent = "⚠️ Llena todos los campos"; return; }
+  if(pass.length < 6){ error.textContent = "⚠️ Mínimo 6 caracteres"; return; }
   
-  const {error:e}=await supabase.auth.signUp({email,password:pass,options:{data:{nombre}}});
-  if(e){error.textContent="❌ "+e.message;return;}
-  alert("✅ ¡Cuenta creada! Ya entra 😊");
+  const {error:e} = await supabase.auth.signUp({email, password: pass, options: {data: {nombre}}});
+  if(e){ error.textContent = "❌ " + e.message; return; }
+  alert("✅ ¡Cuenta creada! Ya puedes entrar 😊");
   mostrarLogin();
 }
 
-// --- INICIAR SESIÓN ---
 async function entrar(){
-  const email=document.getElementById("email").value.trim();
-  const pass=document.getElementById("password").value;
-  const error=document.getElementById("error");
-  if(!email||!pass){error.textContent="⚠️ Escribe tus datos";return;}
+  const email = document.getElementById("email").value.trim();
+  const pass = document.getElementById("password").value;
+  const error = document.getElementById("error");
+  if(!email || !pass){ error.textContent = "⚠️ Escribe tus datos"; return; }
   
-  const {error:e,data}=await supabase.auth.signInWithPassword({email,password:pass});
-  if(e){error.textContent="❌ "+e.message;return;}
+  const {error:e, data} = await supabase.auth.signInWithPassword({email, password: pass});
+  if(e){ error.textContent = "❌ " + e.message; return; }
   
   miCorreo = email;
   miNombre = data.user.user_metadata?.nombre || "Amigo";
   document.getElementById("saludo").textContent = `¡Hola, ${miNombre}! 👋`;
-  document.getElementById("boton-admin").style.display = email===TU_CORREO?"block":"none";
+  document.getElementById("boton-admin").style.display = email === TU_CORREO ? "block" : "none";
   mostrarPantalla('inicio');
 }
 
-// --- PERFIL ---
 async function llenarPerfil(){
-  const {data}=await supabase.auth.getSession();
+  const {data} = await supabase.auth.getSession();
   if(data?.session?.user){
-    const u=data.session.user;
-    document.getElementById("nombre-perfil").textContent=u.user_metadata?.nombre||"No especificado";
-    document.getElementById("correo-perfil").textContent=u.email;
+    const u = data.session.user;
+    document.getElementById("nombre-perfil").textContent = u.user_metadata?.nombre || "No especificado";
+    document.getElementById("correo-perfil").textContent = u.email;
   }
 }
 
-// --- CERRAR SESIÓN ---
 async function salir(){ await supabase.auth.signOut(); mostrarLogin(); }
-
-// --- MODO OSCURO ---
 function modoOscuro(){ document.body.classList.toggle("modo-oscuro"); }
 
-// --- CAMBIAR COLORES ---
-function aplicarColores(estilo){
-  const r=document.documentElement.style;
-  document.querySelectorAll('.color-opcion').forEach(b=>b.classList.remove('activo'));
-  event.target.classList.add('activo');
-  const c={
-    original:['#6d28d9','#a78bfa','#60a5fa','#67e8f9','#f9a8d4','#8b5cf6','#ec4899'],
-    calido:['#c2410c','#fca5a5','#fcd34d','#86efac','#fde68a','#f97316','#eab308'],
-    fresco:['#0f766e','#34d399','#3b82f6','#8b5cf6','#93c5fd','#10b981','#3b82f6'],
-    vivo:['#be185d','#fb923c','#f43f5e','#a855f7','#f0abfc','#f97316','#ec4899']
-  }[estilo];
-  r.setProperty('--color-primario',c[0]);
-  r.setProperty('--color-fondo1',c[1]);
-  r.setProperty('--color-fondo2',c[2]);
-  r.setProperty('--color-fondo3',c[3]);
-  r.setProperty('--color-fondo4',c[4]);
-  r.setProperty('--color-boton1',c[5]);
-  r.setProperty('--color-boton2',c[6]);
-}
-
-// === CHAT: TODOS ENVIAN Y VEN ===
 let suscripcionChat = null;
 
 async function cargarMensajes(){
-  // Cargar mensajes antiguos
-  const {data:mensajes}=await supabase.from('chat').select('*').order('created_at',{ascending:true});
+  const {data: mensajes} = await supabase.from('chat').select('*').order('created_at', {ascending: true});
   dibujarMensajes(mensajes || []);
   
-  // Escuchar mensajes NUEVOS en tiempo real
   if(!suscripcionChat){
     suscripcionChat = supabase.channel('chat-en-vivo')
-      .on('postgres_changes',{event:'INSERT',schema:'public',table:'chat'},
-        (msg)=>{ agregarMensaje(msg.new); })
+      .on('postgres_changes', {event: 'INSERT', schema: 'public', table: 'chat'},
+        (msg) => { agregarMensaje(msg.new); })
       .subscribe();
   }
 }
 
 function dibujarMensajes(lista){
-  const caja=document.getElementById("caja-chat");
-  caja.innerHTML='<p style="text-align:center; color:#888; font-size:14px">📌 Bienvenidos al chat 👇</p>';
-  lista.forEach(m=>agregarMensaje(m));
+  const caja = document.getElementById("caja-chat");
+  caja.innerHTML = '<p style="text-align:center; color:#888; font-size:14px">📌 Bienvenidos al chat 👇</p>';
+  lista.forEach(m => agregarMensaje(m));
 }
 
 function agregarMensaje(m){
-  const caja=document.getElementById("caja-chat");
+  const caja = document.getElementById("caja-chat");
   const tuyo = m.quien === miNombre;
-  const hora = new Date(m.created_at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  const hora = new Date(m.created_at).toLocaleTimeString('es-MX', {hour:'2-digit', minute:'2-digit'});
   
-  const div=document.createElement("div");
-  div.className = `mensaje ${tuyo?'mensaje-tuyo':'mensaje-otro'}`;
+  const div = document.createElement("div");
+  div.className = `mensaje ${tuyo ? 'mensaje-tuyo' : 'mensaje-otro'}`;
   div.innerHTML = !tuyo ? `<div class="nombre-quien">${m.quien}</div>` : '';
-  div.innerHTML += `<div>${m.texto}</div><div class="hora-mensaje">${hora}</div>`;
+  div.innerHTML += `<div>${m.texto}</div><div style="font-size:10px; opacity:0.7; text-align:right; margin-top:4px">${hora}</div>`;
   
   caja.appendChild(div);
-  caja.scrollTop = caja.scrollHeight; // Bajar automáticamente
+  caja.scrollTop = caja.scrollHeight;
 }
 
 async function enviarMensaje(){
-  const texto=document.getElementById("texto-mensaje").value.trim();
+  const texto = document.getElementById("texto-mensaje").value.trim();
   if(!texto) return;
   
-  await supabase.from('chat').insert([{
-    quien: miNombre,
-    texto: texto
-  }]);
-  
-  document.getElementById("texto-mensaje").value='';
+  await supabase.from('chat').insert([{quien: miNombre, texto: texto}]);
+  document.getElementById("texto-mensaje").value = '';
 }
 
-// --- REVISAR SESIÓN AL CARGAR ---
 window.onload = async function(){
   const {data} = await supabase.auth.getSession();
   if(data?.session){
     miCorreo = data.session.user.email;
     miNombre = data.session.user.user_metadata?.nombre || "Amigo";
     document.getElementById("saludo").textContent = `¡Hola, ${miNombre}! 👋`;
-    document.getElementById("boton-admin").style.display = miCorreo===TU_CORREO?"block":"none";
+    document.getElementById("boton-admin").style.display = miCorreo === TU_CORREO ? "block" : "none";
     mostrarPantalla('inicio');
   } else {
-    mostrarLogin();
+    mostrarPantalla('login');
   }
 };
 </script>
-
 </body>
   </html>
-                                                             
+  
