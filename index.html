@@ -41,7 +41,7 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   font-size:16px;
 }
 
-.login{
+.login, .registro{
   width:100%;
   padding:16px;
   margin-top:15px;
@@ -51,14 +51,20 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   color:white;
   font-size:18px;
   font-weight:bold;
+  cursor:pointer;
 }
 
-.dark{
+.registro{
+  background:linear-gradient(90deg,#10b981,#3b82f6);
+}
+
+.dark, .cambiar-vista{
   margin-top:18px;
   border:0;
   background:#eee;
   padding:10px 15px;
   border-radius:15px;
+  cursor:pointer;
 }
 
 .error{
@@ -67,7 +73,13 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   font-size:14px;
 }
 
-#inicio{display:none}
+.exito{
+  color:#16a34a;
+  margin-top:12px;
+  font-size:14px;
+}
+
+#inicio, #registro-pantalla{display:none}
 
 .menu{
   display:grid;
@@ -82,6 +94,7 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   border-radius:18px;
   font-size:16px;
   background:#f3e8ff;
+  cursor:pointer;
 }
 
 .logout{
@@ -90,6 +103,7 @@ h1{font-size:42px;color:#6d28d9;margin:8px}
   border:0;
   border-radius:15px;
   background:#fee2e2;
+  cursor:pointer;
 }
 
 body.modo-oscuro{
@@ -111,7 +125,7 @@ body.modo-oscuro{
   border-color:#555;
 }
 
-.modo-oscuro .dark{
+.modo-oscuro .dark, .modo-oscuro .cambiar-vista{
   background:#444;
   color:white;
 }
@@ -125,6 +139,7 @@ body.modo-oscuro{
 
 <body>
 
+<!-- PANTALLA DE INICIO DE SESIÓN -->
 <div class="app" id="login">
   <div class="crown">👑</div>
   <div class="bear">🐻</div>
@@ -143,17 +158,55 @@ body.modo-oscuro{
   </button>
 
   <p id="error" class="error"></p>
+  <p id="exito" class="exito"></p>
+
+  <button class="cambiar-vista" onclick="mostrarRegistro()">
+    ✨ ¿No tienes cuenta? Regístrate
+  </button>
 
   <button class="dark" onclick="modoOscuro()">
     🌙 Modo oscuro
   </button>
 </div>
 
+<!-- PANTALLA DE REGISTRO -->
+<div class="app" id="registro-pantalla">
+  <div class="crown">👑</div>
+  <div class="bear">🐻</div>
+
+  <h1>Crear Cuenta</h1>
+  <p class="subtitle">Únete a Goyli 💙</p>
+
+  <input id="nombre" class="input" type="text"
+    placeholder="👤 Tu nombre">
+
+  <input id="email-registro" class="input" type="email"
+    placeholder="📧 Correo electrónico">
+
+  <input id="password-registro" class="input" type="password"
+    placeholder="🔑 Contraseña (mínimo 6 caracteres)">
+
+  <button class="registro" onclick="registrarse()">
+    Crear cuenta ✨
+  </button>
+
+  <p id="error-registro" class="error"></p>
+
+  <button class="cambiar-vista" onclick="mostrarLogin()">
+    🔑 ¿Ya tienes cuenta? Entrar
+  </button>
+
+  <button class="dark" onclick="modoOscuro()">
+    🌙 Modo oscuro
+  </button>
+</div>
+
+<!-- PANTALLA PRINCIPAL -->
 <div class="app" id="inicio">
   <div class="crown">👑</div>
   <div class="bear">🐻</div>
 
-  <h1>¡Hola! 👋</h1>
+  <h1 id="saludo">¡Hola! 👋</h1>
   <p class="subtitle">Bienvenido a Goyli 💙</p>
 
   <div class="menu">
@@ -182,53 +235,135 @@ body.modo-oscuro{
 const SUPABASE_URL = "https://muwrlnzphjkhzsewuges.supabase.co";
 const SUPABASE_KEY = "sb_publishable_C3oaqdeVudp4zyUL071CrQ_XnyB1XLm";
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// --- FUNCIONES DE NAVEGACIÓN ---
+function mostrarRegistro(){
+  document.getElementById("login").style.display = "none";
+  document.getElementById("registro-pantalla").style.display = "block";
+  limpiarMensajes();
+}
+
+function mostrarLogin(){
+  document.getElementById("registro-pantalla").style.display = "none";
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("login").style.display = "block";
+  limpiarMensajes();
+}
+
+function mostrarInicio(){
+  document.getElementById("login").style.display = "none";
+  document.getElementById("registro-pantalla").style.display = "none";
+  document.getElementById("inicio").style.display = "block";
+}
+
+function limpiarMensajes(){
+  document.getElementById("error").textContent = "";
+  document.getElementById("exito").textContent = "";
+  document.getElementById("error-registro").textContent = "";
+}
+
+// --- REGISTRARSE ---
+async function registrarse(){
+  const nombre = document.getElementById("nombre").value.trim();
+  const email = document.getElementById("email-registro").value.trim();
+  const password = document.getElementById("password-registro").value;
+  const error = document.getElementById("error-registro");
+
+  error.textContent = "";
+
+  if(!nombre || !email || !password){
+    error.textContent = "⚠️ Llena todos los campos";
+    return;
+  }
+
+  if(password.length < 6){
+    error.textContent = "⚠️ La contraseña debe tener al menos 6 caracteres";
+    return;
+  }
+
+  const {data, error: signUpError} = await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      data: { nombre: nombre }
+    }
+  });
+
+  if(signUpError){
+    error.textContent = "❌ " + signUpError.message;
+    return;
+  }
+
+  // Éxito
+  alert("✅ ¡Cuenta creada! Ya puedes entrar 😊");
+  mostrarLogin();
+  document.getElementById("exito").textContent = "✅ Cuenta creada con éxito. ¡Inicia sesión!";
+}
+
+// --- INICIAR SESIÓN ---
 async function entrar(){
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const error = document.getElementById("error");
 
   error.textContent = "";
 
-  const {error: loginError} =
-    await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-  if(loginError){
-    error.textContent = "No se pudo iniciar sesión. Revisa tus datos.";
+  if(!email || !password){
+    error.textContent = "⚠️ Escribe tu correo y contraseña";
     return;
   }
 
+  const {error: loginError} = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if(loginError){
+    error.textContent = "❌ " + loginError.message;
+    return;
+  }
+
+  mostrarInicioConNombre();
+}
+
+// --- MOSTRAR INICIO CON NOMBRE ---
+async function mostrarInicioConNombre(){
+  const {data} = await supabaseClient.auth.getSession();
+  if(data.session?.user){
+    const nombre = data.session.user.user_metadata?.nombre || "Amigo";
+    document.getElementById("saludo").textContent = `¡Hola, ${nombre}! 👋`;
+  }
   mostrarInicio();
 }
 
+// --- CERRAR SESIÓN ---
 async function salir(){
   await supabaseClient.auth.signOut();
-  document.getElementById("inicio").style.display="none";
-  document.getElementById("login").style.display="block";
+  mostrarLogin();
 }
 
-function mostrarInicio(){
-  document.getElementById("login").style.display="none";
-  document.getElementById("inicio").style.display="block";
-}
-
+// --- MODO OSCURO ---
 function modoOscuro(){
   document.body.classList.toggle("modo-oscuro");
 }
 
-supabaseClient.auth.getSession().then(({data})=>{
-  if(data.session){
-    mostrarInicio();
+// --- RECORDAR SESIÓN ---
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if(session){
+    mostrarInicioConNombre();
   }
 });
+
+// Al cargar la página, revisar si ya hay sesión
+window.onload = async function(){
+  const {data} = await supabaseClient.auth.getSession();
+  if(data.session){
+    mostrarInicioConNombre();
+  }
+};
 </script>
 
 </body>
-  </html>
+    </html>
+  
